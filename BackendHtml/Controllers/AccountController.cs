@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using BachendHtml.Context;
 using LoginRegisterExample.Models;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace BackendHtml.Controllers
 {
@@ -22,14 +25,38 @@ namespace BackendHtml.Controllers
 
         // Xử lý đăng nhập
         [HttpPost]
-        public IActionResult Login(string username, string password)
+        public async Task<IActionResult> Login(string username, string password)
         {
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                ViewBag.Message = "Vui lòng nhập đầy đủ thông tin";
+                return View();
+            }
+
+            // Kiểm tra tên đăng nhập và mật khẩu
             var user = _context.Users.FirstOrDefault(u => u.Username == username);
 
             if (user != null && PasswordHasher.VerifyPassword(password, user.PasswordHash))
             {
-                ViewBag.Message = "Đăng nhập thành công!";
-                return View("Success");
+                // Tạo claims
+                List<Claim> claims = new List<Claim>{
+            new Claim(ClaimTypes.Name, user.Fullname),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+        };
+
+                // Tạo identity và principal
+                ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+                // Đăng nhập và lưu cookie
+                await HttpContext.SignInAsync(principal, new AuthenticationProperties
+                {
+                    IsPersistent = true
+                });
+
+
+                TempData["Message"] = "Đăng nhập thành công!";
+                return RedirectToAction("Index", "Home");
             }
             else
             {

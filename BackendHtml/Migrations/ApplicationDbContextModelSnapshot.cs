@@ -23,7 +23,7 @@ namespace BachendHtml.Migrations
 
             modelBuilder.Entity("LoginRegisterExample.Models.User", b =>
                 {
-                    b.Property<string>("Username")
+                    b.Property<string>("Id")
                         .HasColumnType("text");
 
                     b.Property<string>("Fullname")
@@ -34,7 +34,11 @@ namespace BachendHtml.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Username");
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
                 });

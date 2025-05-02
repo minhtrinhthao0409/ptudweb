@@ -1,0 +1,14 @@
+<h2>Đăng nhập</h2>
+<form method="post">
+    <label for="username">Tên đăng nhập:</label><br>
+    <input type="text" id="username" name="username" required><br><br>
+
+    <label for="password">Mật khẩu:</label><br>
+    <input type="password" id="password" name="password" required><br><br>
+
+    <input type="submit" value="Đăng nhập">
+</form>
+
+<p>@ViewBag.Message</p>
+
+<p>Bạn chưa có tài khoản? <a href="/Account/Register">Đăng ký</a></p>

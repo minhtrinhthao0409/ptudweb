@@ -29,11 +29,11 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapStaticAssets();
+app.UseStaticFiles();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=Register}/{id?}");
+    pattern: "{controller=Account}/{action=Index}/{id?}");
 
 
 app.Run();

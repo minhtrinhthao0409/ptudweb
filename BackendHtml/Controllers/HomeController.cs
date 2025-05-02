@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using BachendHtml.Models;
+using BackendHtml.Models;
 
-namespace BachendHtml.Controllers;
+namespace BackendHtml.Controllers;
 
 public class HomeController : Controller
 {

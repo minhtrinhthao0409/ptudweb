@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BachendHtml.Models
+namespace BackendHtml.Models
 {
     public class RegisterView
     {
@@ -10,6 +10,6 @@ namespace BachendHtml.Models
 
         [DataType(DataType.Password)]
         public string Password { get; set; } = null!;
-        
+
     }
 }

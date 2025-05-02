@@ -1,7 +1,7 @@
 ﻿using LoginRegisterExample.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BachendHtml.Context
+namespace BackendHtml.Context
 {
     public class ApplicationDbContext : DbContext
     {

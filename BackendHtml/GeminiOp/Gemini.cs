@@ -1,3 +1,4 @@
+
 using System;
 using System.Net.Http;
 using System.Text;
@@ -8,7 +9,7 @@ public class Gemini
     private static readonly HttpClient client = new HttpClient();
     private static readonly API a = new API();
 
-    static async Task<string> CallGeminiApi(string prompt, string apiUrl, string apiKey)
+    public static async Task<string> CallGeminiApi(string prompt, string apiUrl, string apiKey)
     {
         try
         {

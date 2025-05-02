@@ -1,4 +1,5 @@
-using BachendHtml.Context;
+using BackendHtml.Context;
+using BackendHtml.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddScoped<AIRepository>();
 
 //Register
 
@@ -19,6 +20,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         p.LoginPath = "/account/login";
         p.AccessDeniedPath = "/account/denied";
+        p.Cookie.Name = "MyAppAuth";
         p.ExpireTimeSpan = TimeSpan.FromDays(30);
     }
 );
@@ -36,10 +38,10 @@ if (!app.Environment.IsDevelopment())
 
 
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseRouting();
-
-app.UseAuthorization();
+app.UseAuthentication(); // Add this line to enable authentication middleware
+app.UseAuthorization(); // Add this line to enable authorization middleware
 
 app.UseStaticFiles();
 

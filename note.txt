@@ -1,2 +1,5 @@
 dotnet ef migrations add UpdateModel
 dotnet ef database update
+
+dotnet add package Dapper
+dotnet add package System.Data.SqlClient

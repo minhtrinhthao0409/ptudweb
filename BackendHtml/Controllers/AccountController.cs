@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using BachendHtml.Context;
+using BackendHtml.Context;
 using LoginRegisterExample.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -40,9 +40,16 @@ namespace BackendHtml.Controllers
             {
                 // Tạo claims
                 List<Claim> claims = new List<Claim>{
-            new Claim(ClaimTypes.Name, user.Fullname),
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-        };
+                    new Claim(ClaimTypes.Name, user.Fullname),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                };
+                // List<Claim> claims = new List<Claim>{
+                //     new Claim(ClaimTypes.Name, member.Fullname),
+                //     new Claim(ClaimTypes.Email, member.Email),
+                //     new Claim(ClaimTypes.NameIdentifier, member.MemberId.ToString())
+                // };
+
+                ;
 
                 // Tạo identity và principal
                 ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -56,7 +63,7 @@ namespace BackendHtml.Controllers
 
 
                 TempData["Message"] = "Đăng nhập thành công!";
-                return RedirectToAction("Index", "Home");
+                return Redirect("/AI/ADD"); // Chuyển hướng đến trang AI
             }
             else
             {

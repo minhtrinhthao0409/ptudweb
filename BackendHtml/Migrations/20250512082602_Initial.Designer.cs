@@ -8,14 +8,14 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace BachendHtml.Migrations
+namespace BackendHtml.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250430045807_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250512082602_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
-        protected void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,7 +26,11 @@ namespace BachendHtml.Migrations
 
             modelBuilder.Entity("LoginRegisterExample.Models.User", b =>
                 {
-                    b.Property<string>("Username")
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Fullname")
@@ -37,7 +41,11 @@ namespace BachendHtml.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Username");
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
                 });

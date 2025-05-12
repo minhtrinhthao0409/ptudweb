@@ -11,5 +11,6 @@ namespace LoginRegisterExample.Models
         [Required(ErrorMessage = "Họ tên không được để trống.")]
         public string Fullname { get; set; } = null!;
         public string PasswordHash { get; set; } = null!;
+        public string Email { get; set; } = null!;
     }
 }

@@ -4,16 +4,19 @@ using LoginRegisterExample.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using NuGet.Protocol.Plugins;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace BackendHtml.Controllers
 {
     public class AccountController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public AccountController(ApplicationDbContext context)
+        IEmailSender sender;
+        public AccountController(ApplicationDbContext context, IEmailSender sender)
         {
             _context = context;
+            this.sender = sender;
         }
 
         // Trang đăng nhập
@@ -25,29 +28,30 @@ namespace BackendHtml.Controllers
 
         // Xử lý đăng nhập
         [HttpPost]
-        public async Task<IActionResult> Login(string username, string password)
+        public async Task<IActionResult> Login(string email, string password)
         {
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
                 ViewBag.Message = "Vui lòng nhập đầy đủ thông tin";
                 return View();
             }
 
             // Kiểm tra tên đăng nhập và mật khẩu
-            var user = _context.Users.FirstOrDefault(u => u.Username == username);
-
+            User user = _context.Users.FirstOrDefault(u => u.Email == email);
+            Console.WriteLine("---------------");
+            Console.WriteLine(user.Email);
             if (user != null && PasswordHasher.VerifyPassword(password, user.PasswordHash))
             {
                 // Tạo claims
+                //List<Claim> claims = new List<Claim>{
+                //    new Claim(ClaimTypes.Name, user.Fullname),
+                //    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                //};
                 List<Claim> claims = new List<Claim>{
-                    new Claim(ClaimTypes.Name, user.Fullname),
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-                };
-                // List<Claim> claims = new List<Claim>{
-                //     new Claim(ClaimTypes.Name, member.Fullname),
-                //     new Claim(ClaimTypes.Email, member.Email),
-                //     new Claim(ClaimTypes.NameIdentifier, member.MemberId.ToString())
-                // };
+                     new Claim(ClaimTypes.Name, user.Fullname),
+                     new Claim(ClaimTypes.Email, user.Email),
+                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                 };
 
                 ;
 
@@ -63,10 +67,13 @@ namespace BackendHtml.Controllers
 
 
                 TempData["Message"] = "Đăng nhập thành công!";
+                Console.WriteLine("-------------------------------dăng nahpaj tc");
                 return Redirect("/AI/ADD"); // Chuyển hướng đến trang AI
+                //return Redirect("/home");
             }
             else
             {
+                Console.WriteLine("-------------------------------dăng nahpaj tb");
                 ViewBag.Message = "Đăng nhập thất bại. Sai tên hoặc mật khẩu.";
                 return View();
             }
@@ -81,7 +88,7 @@ namespace BackendHtml.Controllers
 
         // Xử lý đăng ký
         [HttpPost]
-        public IActionResult Register(string username, string fullname, string password)
+        public IActionResult Register(string username, string fullname, string password, string email)
         {
             if (_context.Users.Any(u => u.Username == username))
             {
@@ -89,10 +96,11 @@ namespace BackendHtml.Controllers
                 return View();
             }
 
-            var newUser = new User
+            User newUser = new User
             {
                 Username = username,
                 Fullname = fullname,
+                Email = email,
                 PasswordHash = PasswordHasher.HashPassword(password)
             };
 
@@ -100,7 +108,16 @@ namespace BackendHtml.Controllers
             _context.SaveChanges();
 
             ViewBag.Message = "Đăng ký thành công!";
-            return View("Success");
+
+         
+            string bodyMail = "Dear " + Convert.ToString(newUser.Fullname) + ",\n\n" +
+            "Thank you for registering an account for AI Bep Web. \n" +
+            "Username for login: " + Convert.ToString(newUser.Username) + "\n" +
+            "\n\nThank you,\n" + "Your AI Bep Team \n";
+
+            sender.SendEmailAsync(newUser.Email, "AI Bep Account Created", bodyMail);
+            
+            return Redirect("/ai/add");
         }
     }
 }

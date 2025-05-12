@@ -1,5 +1,12 @@
+CREATE TABLE Users (
+    Id TEXT PRIMARY KEY,
+    Username TEXT,
+    Fullname TEXT,
+    PasswordHash TEXT,
+    Email TEXT
+);
 SELECT * FROM public."Users"
-ORDER BY "Username" ASC 
+ORDER BY username ASC
 
 CREATE TABLE AIContent (
     Id SERIAL NOT NULL PRIMARY KEY,

@@ -1,5 +1,8 @@
-dotnet ef migrations add UpdateModel
-dotnet ef database update
+Đảm bảo class DbContext có khai báo DbSet<User> Users { get; set; } và mô hình User khớp với cấu trúc bảng.
+
+Add-Migration Initial
+Update-Database
 
 dotnet add package Dapper
 dotnet add package System.Data.SqlClient
+https://myaccount.google.com/u/7/apppasswords?pli=1&rapt=AEjHL4Pb0cGX3KpVwltb3LgFv9X5aydYdKLyNpE-FPOHEAkE2n2yv63gawBQq5q9OOQvV7sUmql2CCINH2f-SC27GR5zvqYMIoX_adbf6p0MX8GTxRzgIzU

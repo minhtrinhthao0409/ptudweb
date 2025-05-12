@@ -1,7 +1,10 @@
+﻿using BackendHtml;
 using BackendHtml.Context;
 using BackendHtml.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +27,15 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         p.ExpireTimeSpan = TimeSpan.FromDays(30);
     }
 );
+//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+//    p => {
+//        p.LoginPath = "/account/login"; // Mục đích kiểm tra đăng nhập  nếu chưa dn thì nó đẩy vào trang "/auth/login"
+//        p.AccessDeniedPath = "/auth/accessdenied";  //khi truy cập vào đường dẫn với role không đúng sẽ bị đẩy qua trang này
+//        p.ExpireTimeSpan = TimeSpan.FromDays(30);  //Khai báo ngày hết hạn
+//    }
+//);
+builder.Services.Configure<MailSetting>(builder.Configuration.GetSection("MailSetting"));
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -43,11 +55,16 @@ app.UseRouting();
 app.UseAuthentication(); // Add this line to enable authentication middleware
 app.UseAuthorization(); // Add this line to enable authorization middleware
 
-app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, "wwwwroot")),
+    RequestPath = "" // Ánh xạ đường dẫn gốc (không cần thêm tiền tố)
+});
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=Index}/{id?}");
+    pattern: "{controller=AI}/{action=ADD}/{id?}");
 
 
 app.Run();

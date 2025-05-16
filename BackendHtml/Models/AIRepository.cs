@@ -82,4 +82,13 @@ public class AIRepository : RepositoryBase
             return await connection.ExecuteAsync(sql, obj);
         }
     }
+
+    public async Task<IEnumerable<AIContent>> GetAllAIContentsByCategory(string category)
+    {
+        // var sql = "SELECT * FROM AIContent WHERE UserID = @UserID";
+        var sql = "SELECT * FROM \"AIContent\" WHERE \"CategoryContent\" = @CategoryContent";
+        var parameters = new { CategoryContent = category };
+        var result = await connection.QueryAsync<AIContent>(sql, parameters);
+        return result ?? throw new InvalidOperationException("AIContent not found.");
+    }
 }

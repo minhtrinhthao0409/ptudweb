@@ -102,6 +102,13 @@
             align-items: center;
         }
 
+        .form-select {
+            margin: 20px 0;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
         .search-bar {
             display: flex;
             max-width: 600px;
@@ -327,6 +334,10 @@
             <a href="/">Home</a>
             <a href="/home/forum">Cộng đồng</a>
             <a href="#">Contact</a>
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                <a href="/ai/usercontent">Quản lý bài viết</a>
+            }
         </nav>
         <div class="auth-buttons">
             @if (User.Identity != null && User.Identity.IsAuthenticated)
@@ -358,6 +369,31 @@
 
         <div class="popular-searches">
             <h3>Tìm kiếm phổ biến</h3>
+
+
+            @* <select class="form-select" id="categoryContent" name="category">
+                <option value="">Chọn danh mục</option>
+                @foreach (Category item in ViewBag.Categorycontent)
+                {
+                    <option value="@item.CategoryName ">@item.CategoryName</option>
+                }
+            </select> *@
+
+            <form method="post" class="form-select">
+                <select class="form-select" id="categoryContent" name="category">
+                    <option value="@ViewBag.CategoryCurrent">@ViewBag.CategoryCurrent</option>
+                    @foreach (Category item in ViewBag.Categorycontent)
+                    {
+                        <option value="@item.CategoryName"
+                            selected="@(item.CategoryName == ViewBag.SelectedCategory ? "selected" : null)">
+                            @item.CategoryName
+                        </option>
+                    }
+                </select>
+                <button type="submit" class="btn-search">Tìm Kiếm Theo</button>
+            </form>
+
+
             <div class="popular-grid">
                 <div class="popular-item">
                     <img src="https://cdn.eva.vn/upload/2-2022/images/2022-06-30/1656555406-877-7-mon-rim-man-vua-ngon-lai-re-tien-vo-nau-them-nhieu-com-van-chang-du-an-3-1604894899-272-width640height480-1656555406-width640height480.jpg"

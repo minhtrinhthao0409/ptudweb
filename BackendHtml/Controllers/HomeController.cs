@@ -163,12 +163,31 @@ public class HomeController : Controller
     public async Task<IActionResult> Forum()
     {
         var result = await _aiRepository.GetAllAIContents();
+        ViewBag.CategoryContent = _categoryRepository.GetCategories();
         if (result == null)
         {
             System.Console.WriteLine("-------------------------------------------------");
             System.Console.WriteLine("result null");
         }
         return View(result);
+    }
+    [HttpPost]
+    public async Task<IActionResult> Forum(string category)
+    {
+        ViewBag.CategoryContent = _categoryRepository.GetCategories();
+        ViewBag.CategoryCurrent = category;
+        if (category == "All")
+        {
+            var result = await _aiRepository.GetAllAIContents();
+
+            return View(result);
+        }
+        else
+        {
+            var result = await _aiRepository.GetAllAIContentsByCategory(category);
+            return View(result);
+
+        }
     }
 }
 

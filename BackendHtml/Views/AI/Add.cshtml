@@ -99,20 +99,23 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>AI Recipe Generator</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
 
-    
+
     <link href="~/css/styleai.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
 
-    <nav style="background-color: #4B7322; padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; font-family: Arial, sans-serif;">
+    <nav
+        style="background-color: #4B7322; padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; font-family: Arial, sans-serif;">
         <div style="display: flex; align-items: center; gap: 1rem;">
             <img src="~/images/logo_bepai_no_bg.png" alt="logo" style="width: 60px; height: 60px;" />
             <span style="color: white; font-family: 'Pacifico', cursive; font-size: 1.6rem;">Bếp AI</span>
@@ -121,8 +124,21 @@
             <a href="#" style="color: white; text-decoration: none; margin-left: 1.5rem;">Contact</a>
         </div>
         <div style="display: flex; align-items: center; gap: 1rem;">
-            <a href="#" style="background-color: black; color: #00FFAA; padding: 0.4rem 1rem; border-radius: 12px; text-decoration: none;">ĐĂNG NHẶP</a>
-            <a href="#" style="border: 2px solid white; color: white; padding: 0.4rem 1rem; border-radius: 12px; text-decoration: none;">ĐĂNG KÝ</a>
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                <a href="/home"
+                    style="background-color: black; color: #00FFAA; padding: 0.4rem 1rem; border-radius: 12px; text-decoration: none;">Chào
+                    mừng: @User.Identity.Name</a>
+                <a href="/account/logout"
+                    style="background-color: black; color: #00FFAA; padding: 0.4rem 1rem; border-radius: 12px; text-decoration: none;">ĐĂNG
+                    XUẤT</a>
+            }
+            else
+            {
+                <a href="/account/login"
+                    style="border: 2px solid white; color: white; padding: 0.4rem 1rem; border-radius: 12px; text-decoration: none;">ĐĂNG
+                    NHẬP</a>
+            }
         </div>
     </nav>
 
@@ -132,7 +148,8 @@
     </header>
     <div class="title-area">
         <h1>Căn bếp AI cho mọi nhà!</h1>
-        <p><strong>Không biết tối nay nấu gì?</strong> Hãy nhập danh sách nguyên liệu, có thể có hoặc không có số lượng, và đầu bếp AI cá nhân của bạn sẽ tạo ra công thức món ăn phù hợp với bạn:</p>
+        <p><strong>Không biết tối nay nấu gì?</strong> Hãy nhập danh sách nguyên liệu, có thể có hoặc không có số lượng,
+            và đầu bếp AI cá nhân của bạn sẽ tạo ra công thức món ăn phù hợp với bạn:</p>
     </div>
     <main>
         <label for="ingredients">Nguyên liệu:</label>
@@ -171,42 +188,75 @@
     <section class="stats-section">
         <h2>cookAIfood in Numbers</h2>
         <div class="stats-container">
-            <div class="stat"><i class="fas fa-user"></i><p class="label">Thành viên</p><p class="value">6,781</p></div>
-            <div class="stat"><i class="fas fa-utensils"></i><p class="label">Công thức đã tạo</p><p class="value">6,949</p></div>
-            <div class="stat"><i class="fas fa-image"></i><p class="label">Hình ảnh đã tạo</p><p class="value">8,225</p></div>
+            <div class="stat"><i class="fas fa-user"></i>
+                <p class="label">Thành viên</p>
+                <p class="value">6,781</p>
+            </div>
+            <div class="stat"><i class="fas fa-utensils"></i>
+                <p class="label">Công thức đã tạo</p>
+                <p class="value">6,949</p>
+            </div>
+            <div class="stat"><i class="fas fa-image"></i>
+                <p class="label">Hình ảnh đã tạo</p>
+                <p class="value">8,225</p>
+            </div>
         </div>
     </section>
     <section class="testimonials">
         <h2>Ý kiến từ người dùng</h2>
         <div class="testimonial-grid">
-            <div class="testimonial"><div class="stars">★★★★★</div><p>"Trình tạo công thức AI này thật tuyệt vời! Ban đầu tôi đã hoài nghi, nhưng các công thức rất sáng tạo và thực sự hiệu quả. Những bức ảnh món ăn HD thay đổi hoàn toàn cho blog của tôi."</p><div class="author">Sarah Mitchell</div><div class="role">Food Blogger</div></div>
-            <div class="testimonial"><div class="stars">★★★★★</div><p>"Tính năng lên thực đơn đã giúp tôi tiết kiệm hàng giờ chuẩn bị cho bữa tiệc. Công thức 3 món hoàn hảo khiến mọi khách mời đều ấn tượng. Đáng giá từng đồng!"</p><div class="author">James Cooper</div><div class="role">Home Chef</div></div>
-            <div class="testimonial"><div class="stars">★★★★★</div><p>"Là một đầu bếp chuyên nghiệp, tôi dùng công cụ này để tìm cảm hứng và phát triển thực đơn. Khả năng tạo công thức từ ảnh nguyên liệu là một phép màu. Rất đáng thử!"</p><div class="author">Maria Rodriguez</div><div class="role">Professional Chef</div></div>
+            <div class="testimonial">
+                <div class="stars">★★★★★</div>
+                <p>"Trình tạo công thức AI này thật tuyệt vời! Ban đầu tôi đã hoài nghi, nhưng các công thức rất sáng
+                    tạo và thực sự hiệu quả. Những bức ảnh món ăn HD thay đổi hoàn toàn cho blog của tôi."</p>
+                <div class="author">Sarah Mitchell</div>
+                <div class="role">Food Blogger</div>
+            </div>
+            <div class="testimonial">
+                <div class="stars">★★★★★</div>
+                <p>"Tính năng lên thực đơn đã giúp tôi tiết kiệm hàng giờ chuẩn bị cho bữa tiệc. Công thức 3 món hoàn
+                    hảo khiến mọi khách mời đều ấn tượng. Đáng giá từng đồng!"</p>
+                <div class="author">James Cooper</div>
+                <div class="role">Home Chef</div>
+            </div>
+            <div class="testimonial">
+                <div class="stars">★★★★★</div>
+                <p>"Là một đầu bếp chuyên nghiệp, tôi dùng công cụ này để tìm cảm hứng và phát triển thực đơn. Khả năng
+                    tạo công thức từ ảnh nguyên liệu là một phép màu. Rất đáng thử!"</p>
+                <div class="author">Maria Rodriguez</div>
+                <div class="role">Professional Chef</div>
+            </div>
         </div>
     </section>
     <section style="padding: 4rem 1rem; background-color: #ffffff; text-align: center;">
         <h2 style="font-size: 2rem; margin-bottom: 2.5rem; font-weight: bold; color: #333;">
             <i class="fas fa-star" style="color: #D9933D; margin-right: 0.5rem;"></i>Bài viết mới nhất
         </h2>
-        <div class="container-scroll-x" style="display: flex; flex-wrap: nowrap; overflow-x: auto; max-width: 100%; justify-content: center; gap: 2rem; max-width: 1200px; margin: 0 auto;">
+        <div class="container-scroll-x"
+            style="display: flex; flex-wrap: nowrap; overflow-x: auto; max-width: 100%; justify-content: center; gap: 2rem; max-width: 1200px; margin: 0 auto;">
             <div style="background-color: #F2C53D; border-radius: 8px; overflow: hidden; width: 220px;">
-                <img src="https://images.immediate.co.uk/production/volatile/sites/30/2022/06/Party-food-recipes-fcfb3af.jpg" style="width:100%;height:180px;object-fit:cover;" />
+                <img src="https://images.immediate.co.uk/production/volatile/sites/30/2022/06/Party-food-recipes-fcfb3af.jpg"
+                    style="width:100%;height:180px;object-fit:cover;" />
                 <p style="padding: 1rem; font-weight: bold; color: #4B7322;">Classic Split Pea Soup Recipe</p>
             </div>
             <div style="background-color: #F2C53D; border-radius: 8px; overflow: hidden; width: 220px;">
-                <img src="https://www.precisionorthomd.com/wp-content/uploads/2023/10/percision-blog-header-junk-food-102323.jpg" style="width:100%;height:180px;object-fit:cover;" />
+                <img src="https://www.precisionorthomd.com/wp-content/uploads/2023/10/percision-blog-header-junk-food-102323.jpg"
+                    style="width:100%;height:180px;object-fit:cover;" />
                 <p style="padding: 1rem; font-weight: bold; color: #4B7322;">Hearty Ham &amp; Mixed Bean Soup</p>
             </div>
             <div style="background-color: #F2C53D; border-radius: 8px; overflow: hidden; width: 220px;">
-                <img src="https://neat-food.com/cdn/shop/files/neat_emmapharaoh_19march24_12.jpg?v=1712845654&amp;width=4498" style="width:100%;height:180px;object-fit:cover;" />
+                <img src="https://neat-food.com/cdn/shop/files/neat_emmapharaoh_19march24_12.jpg?v=1712845654&amp;width=4498"
+                    style="width:100%;height:180px;object-fit:cover;" />
                 <p style="padding: 1rem; font-weight: bold; color: #4B7322;">Creamy Tuscan Bean Soup</p>
             </div>
             <div style="background-color: #F2C53D; border-radius: 8px; overflow: hidden; width: 220px;">
-                <img src="https://media.istockphoto.com/id/1457433817/photo/group-of-healthy-food-for-flexitarian-diet.jpg?s=612x612&amp;w=0&amp;k=20&amp;c=v48RE0ZNWpMZOlSp13KdF1yFDmidorO2pZTu2Idmd3M=" style="width:100%;height:180px;object-fit:cover;" />
+                <img src="https://media.istockphoto.com/id/1457433817/photo/group-of-healthy-food-for-flexitarian-diet.jpg?s=612x612&amp;w=0&amp;k=20&amp;c=v48RE0ZNWpMZOlSp13KdF1yFDmidorO2pZTu2Idmd3M="
+                    style="width:100%;height:180px;object-fit:cover;" />
                 <p style="padding: 1rem; font-weight: bold; color: #4B7322;">Blueberry Muffins Recipe</p>
             </div>
             <div style="background-color: #F2C53D; border-radius: 8px; overflow: hidden; width: 220px;">
-                <img src="https://www.foodandwine.com/thmb/fjNakOY7IcuvZac1hR3JcSo7vzI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/FAW-recipes-pasta-sausage-basil-and-mustard-hero-06-cfd1c0a2989e474ea7e574a38182bbee.jpg" style="width:100%;height:180px;object-fit:cover;" />
+                <img src="https://www.foodandwine.com/thmb/fjNakOY7IcuvZac1hR3JcSo7vzI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/FAW-recipes-pasta-sausage-basil-and-mustard-hero-06-cfd1c0a2989e474ea7e574a38182bbee.jpg"
+                    style="width:100%;height:180px;object-fit:cover;" />
                 <p style="padding: 1rem; font-weight: bold; color: #4B7322;">Pasta Sausage Basil Recipe</p>
             </div>
         </div>
@@ -215,8 +265,11 @@
     <footer style="text-align: center; padding: 2rem 1rem; background-color: #4B7322; color: white;">
         <p>© 2025 Let's Foodie. All rights reserved.</p>
     </footer>
-    <button id="topBtn" onclick="topFunction()" style="display:none;position:fixed;bottom:20px;right:30px;z-index:99;font-size:18px;border:none;outline:none;background-color:#D95F18;color:white;cursor:pointer;padding:10px 16px;border-radius:8px;" title="Go to top">↑ Top</button>
+    <button id="topBtn" onclick="topFunction()"
+        style="display:none;position:fixed;bottom:20px;right:30px;z-index:99;font-size:18px;border:none;outline:none;background-color:#D95F18;color:white;cursor:pointer;padding:10px 16px;border-radius:8px;"
+        title="Go to top">↑ Top</button>
 
     <script src="~/js/scriptai.js"></script>
 </body>
+
 </html>

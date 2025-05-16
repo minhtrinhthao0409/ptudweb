@@ -16,3 +16,10 @@ CREATE TABLE AIContent (
 
 SELECT * FROM public.aicontent
 ORDER BY "id" ASC 
+
+
+CREATE SEQUENCE aicontent_id_seq;
+ALTER TABLE public."AIContent" 
+ALTER COLUMN "Id" SET DEFAULT nextval('aicontent_id_seq');
+ALTER SEQUENCE aicontent_id_seq OWNED BY "AIContent"."Id";
+nhớ tắt identity của cột Id

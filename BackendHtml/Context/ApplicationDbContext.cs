@@ -1,4 +1,5 @@
-﻿using LoginRegisterExample.Models;
+﻿using BackendHtml.Models;
+using LoginRegisterExample.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackendHtml.Context
@@ -10,5 +11,7 @@ namespace BackendHtml.Context
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<AIContent> AIContent { get; set; }
+        public DbSet<Category> Category { get; set; }
     }
 }

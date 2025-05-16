@@ -68,8 +68,7 @@ namespace BackendHtml.Controllers
 
                 TempData["Message"] = "Đăng nhập thành công!";
                 Console.WriteLine("-------------------------------dăng nahpaj tc");
-                return Redirect("/AI/ADD"); // Chuyển hướng đến trang AI
-                //return Redirect("/home");
+                return Redirect("/home");
             }
             else
             {
@@ -77,6 +76,11 @@ namespace BackendHtml.Controllers
                 ViewBag.Message = "Đăng nhập thất bại. Sai tên hoặc mật khẩu.";
                 return View();
             }
+        }
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Redirect("/account/login");
         }
 
         // Trang đăng ký
@@ -109,15 +113,15 @@ namespace BackendHtml.Controllers
 
             ViewBag.Message = "Đăng ký thành công!";
 
-         
+
             string bodyMail = "Dear " + Convert.ToString(newUser.Fullname) + ",\n\n" +
             "Thank you for registering an account for AI Bep Web. \n" +
             "Username for login: " + Convert.ToString(newUser.Username) + "\n" +
             "\n\nThank you,\n" + "Your AI Bep Team \n";
 
             sender.SendEmailAsync(newUser.Email, "AI Bep Account Created", bodyMail);
-            
-            return Redirect("/ai/add");
+
+            return Redirect("/Account/Login");
         }
     }
 }

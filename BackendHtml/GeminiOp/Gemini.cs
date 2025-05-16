@@ -4,13 +4,16 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using Humanizer;
 public class Gemini
 {
     private static readonly HttpClient client = new HttpClient();
     private static readonly API a = new API();
 
+
     public static async Task<string> CallGeminiApi(string prompt, string apiUrl, string apiKey)
     {
+
         try
         {
             var requestBody = new

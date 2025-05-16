@@ -1,5 +1,9 @@
 Đảm bảo class DbContext có khai báo DbSet<User> Users { get; set; } và mô hình User khớp với cấu trúc bảng.
 
+dotnet build
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+
 Add-Migration Initial
 Update-Database
 

@@ -11,7 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<AIRepository>();
-
+builder.Services.AddScoped<SiteProvider>();
+builder.Services.AddMvc();
 //Register
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -27,13 +28,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         p.ExpireTimeSpan = TimeSpan.FromDays(30);
     }
 );
-//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
-//    p => {
-//        p.LoginPath = "/account/login"; // Mục đích kiểm tra đăng nhập  nếu chưa dn thì nó đẩy vào trang "/auth/login"
-//        p.AccessDeniedPath = "/auth/accessdenied";  //khi truy cập vào đường dẫn với role không đúng sẽ bị đẩy qua trang này
-//        p.ExpireTimeSpan = TimeSpan.FromDays(30);  //Khai báo ngày hết hạn
-//    }
-//);
 builder.Services.Configure<MailSetting>(builder.Configuration.GetSection("MailSetting"));
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 var app = builder.Build();
@@ -47,14 +41,6 @@ if (!app.Environment.IsDevelopment())
 }
 
 
-
-
-
-//app.UseHttpsRedirection();
-app.UseRouting();
-app.UseAuthentication(); // Add this line to enable authentication middleware
-app.UseAuthorization(); // Add this line to enable authorization middleware
-
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
@@ -62,9 +48,18 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "" // Ánh xạ đường dẫn gốc (không cần thêm tiền tố)
 });
 
+//app.UseStaticFiles();
+//app.UseHttpsRedirection();
+app.UseRouting();
+app.UseAuthentication(); // Add this line to enable authentication middleware
+app.UseAuthorization(); // Add this line to enable authorization middleware
+
+
+
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=AI}/{action=ADD}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
 app.Run();

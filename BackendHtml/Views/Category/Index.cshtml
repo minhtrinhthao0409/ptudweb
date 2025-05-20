@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Category>
+﻿@{
+    Layout = null;
+}
+@model IEnumerable<Category>
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Add Category
@@ -16,7 +19,8 @@
                 <div class="row">
                     <label class="col-2 form-label" for="name">Name</label>
                     <div class="col-10">
-                        <input class="form-control" type="text" name="name" id="name" placeholder="Enter Category Name here!">
+                        <input class="form-control" type="text" name="name" id="name"
+                            placeholder="Enter Category Name here!">
                     </div>
                 </div>
             </div>
@@ -74,27 +78,27 @@
 
 
 <script>
-      $(frm).submit(function(ev){
-          ev.preventDefault();
-          $.post('/category/add',{'categoryName':$(frm['name']).val()},(d)=>{
-              console.log(d);
-              window.location.reload();
-          });
-      });
-    let msg = ['Deleted Notify', 'Inserted Notify', 'Edit Notify'];
-        var cn = new signalR.HubConnectionBuilder().withUrl('/notify').build();
-        cn.start().then(()=>{
-            console.log('Listening');
-        }).catch((e)=>{
-            console.log(e);
+    $(frm).submit(function (ev) {
+        ev.preventDefault();
+        $.post('/category/add', { 'categoryName': $(frm['name']).val() }, (d) => {
+            console.log(d);
+            window.location.reload();
         });
-        cn.on('receiveTables', (type, d)=>{
-          //console.log('Inserted');
-          //window.location.reload();
-          console.log(type);
-          console.log(d);
-          if(type ==2){
-              $(rs).append(`
+    });
+    let msg = ['Deleted Notify', 'Inserted Notify', 'Edit Notify'];
+    var cn = new signalR.HubConnectionBuilder().withUrl('/notify').build();
+    cn.start().then(() => {
+        console.log('Listening');
+    }).catch((e) => {
+        console.log(e);
+    });
+    cn.on('receiveTables', (type, d) => {
+        //console.log('Inserted');
+        //window.location.reload();
+        console.log(type);
+        console.log(d);
+        if (type == 2) {
+            $(rs).append(`
                             <tr>
                                 <td>${d.categoryId}</td>
                                 <td>${d.categoryName}</td>
@@ -104,14 +108,14 @@
                                 </td>
                             </tr>
               `);
-          }
-          else if(type ==1){
+        }
+        else if (type == 1) {
             $(`#rs tr[v="${d['categoryId']}"]`).remove();
-          }
-          else{
+        }
+        else {
             $($(`#rs tr[v="${d['categoryId']}"] td`)[1]).text(d['categoryName']);
-          }
-          $('#liveToast div.toast-body').text(msg[type-1]);
-          new bootstrap.Toast(liveToast).show();
-        });
+        }
+        $('#liveToast div.toast-body').text(msg[type - 1]);
+        new bootstrap.Toast(liveToast).show();
+    });
 </script>

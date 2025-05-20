@@ -14,6 +14,10 @@ namespace BackendHtml.Controllers
         {
             return View(_categoryRepository.GetCategories());
         }
+        public IActionResult Add()
+        {
+            return View();
+        }
         [HttpPost]
         public IActionResult Add(Category obj)
         {

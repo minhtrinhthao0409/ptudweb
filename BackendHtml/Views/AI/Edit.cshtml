@@ -105,7 +105,7 @@
             <div class="form-group">
                 <label asp-for="CategoryContent">Danh mục</label>
                 <select class="form-select" asp-for="CategoryContent" id="categoryContent">
-                    <option value="">Chọn danh mục</option>
+
                     @foreach (Category item in ViewBag.Categorycontent)
                     {
                         <option value="@item.CategoryName" selected="@(item.CategoryName == Model.CategoryContent)">
@@ -129,7 +129,7 @@
 
             <div class="form-group">
                 <div>
-                    <label for="f">Image</label>
+                    <label for="f">Hãy tải hình ảnh món ăn của bạn lên!</nav></label>
                     <div>
                         <input type="hidden" name="f" value="@Model.ImageUrl">
                         <img src="~/image_ai/@Model.ImageUrl" alt="@Model.Title" width="70">

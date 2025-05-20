@@ -37,9 +37,8 @@ namespace BackendHtml.Controllers
             }
 
             // Kiểm tra tên đăng nhập và mật khẩu
-            User user = _context.Users.FirstOrDefault(u => u.Email == email);
-            Console.WriteLine("---------------");
-            Console.WriteLine(user.Email);
+            User? user = _context.Users.FirstOrDefault(u => u.Email == email);
+
             if (user != null && PasswordHasher.VerifyPassword(password, user.PasswordHash))
             {
                 // Tạo claims
@@ -67,14 +66,14 @@ namespace BackendHtml.Controllers
 
 
                 TempData["Message"] = "Đăng nhập thành công!";
-                Console.WriteLine("-------------------------------dăng nahpaj tc");
+
                 return Redirect("/home");
             }
             else
             {
-                Console.WriteLine("-------------------------------dăng nahpaj tb");
+
                 ViewBag.Message = "Đăng nhập thất bại. Sai tên hoặc mật khẩu.";
-                return View();
+                return Redirect("/Account/Login");
             }
         }
         public async Task<IActionResult> Logout()
@@ -122,6 +121,10 @@ namespace BackendHtml.Controllers
             sender.SendEmailAsync(newUser.Email, "AI Bep Account Created", bodyMail);
 
             return Redirect("/Account/Login");
+        }
+        public IActionResult Denied()
+        {
+            return View();
         }
     }
 }

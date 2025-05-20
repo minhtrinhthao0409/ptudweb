@@ -159,6 +159,12 @@ namespace BackendHtml.Controllers
                         imageFile.CopyTo(stream);
                     }
                 }
+                else
+                {
+                    // Nếu không có ảnh thì giữ nguyên ảnh cũ
+                    var existingContent = await _aiRepository.GetAIContentById(id);
+                    obj.ImageUrl = existingContent.ImageUrl;
+                }
                 obj.Id = id;
                 obj.CategoryContent = categoryContent;
                 int ret = await _aiRepository.Edit(obj);

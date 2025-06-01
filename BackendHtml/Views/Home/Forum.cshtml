@@ -327,13 +327,15 @@
 <body>
     <header>
         <div class="logo">
-            <img src="~/images/logo_bepai_no_bg.png" alt="Bếp AI logo">
+            <a href="/">
+                <img src="~/images/logo_bepai_no_bg.png" alt="logo" style="width: 60px; height: 60px;" />
+            </a>
             <h1>Bếp AI</h1>
         </div>
         <nav>
             <a href="/">Home</a>
             <a href="/home/forum">Cộng đồng</a>
-            <a href="#">Contact</a>
+            <a href="home/contact">Contact</a>
             @if (User.Identity != null && User.Identity.IsAuthenticated)
             {
                 <a href="/ai/usercontent">Quản lý bài viết</a>

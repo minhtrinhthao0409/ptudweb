@@ -124,7 +124,12 @@
 
         .logo img {
             width: 150px;
-            /* Adjust size of the logo */
+
+        }
+
+        .switch-link.restore-password {
+            margin-left: 45px;
+
         }
     </style>
 </head>
@@ -155,7 +160,8 @@
             </form>
             <div class="divider">hoặc</div>
             <a class="switch-link" href="/account/register">Chưa có tài khoản? Đăng ký</a>
-            <div class="switch-link" onclick="showForm('reset-form')">Quên mật khẩu? Đặt lại</div>
+            <a class="switch-link restore-password" href="/account/restore-password">Quên mật khẩu? Đặt lại</a>
+
         </div>
 
     </div>

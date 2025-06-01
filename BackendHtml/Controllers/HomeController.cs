@@ -24,15 +24,6 @@ public class HomeController : Controller
         _accountRepository = new AccountRepository(_configuration);
     }
 
-    // public IActionResult Index()
-    // {
-    //     return View(_aiRepository.GetAllAIContents());
-    // }
-    public IActionResult Index()
-    {
-        return View();
-    }
-
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetAIContentById(int id)
@@ -52,7 +43,10 @@ public class HomeController : Controller
         var result = await _aiRepository.GetAllAIContents();
         return Ok(result);
     }
-
+    public IActionResult Index()
+    {
+        return View();
+    }
     [HttpPost]
     [Authorize]
     public async Task<IActionResult> Index(String ingredients, string servingSize, string cuisine, string difficulty, string diet)
@@ -189,5 +183,6 @@ public class HomeController : Controller
 
         }
     }
+
 }
 

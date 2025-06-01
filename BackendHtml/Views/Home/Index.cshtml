@@ -35,7 +35,15 @@
             <span style="color: white; font-family: 'Pacifico', cursive; font-size: 1.6rem;">Bếp AI</span>
             <a href="/" style="color: white; text-decoration: none; margin-left: 1.5rem;">Home</a>
             <a href="/home/forum" style="color: white; text-decoration: none; margin-left: 1.5rem;">Cộng đồng</a>
-            <a href="home/Contact" style="color: white; text-decoration: none; margin-left: 1.5rem;">Contact</a>
+            @if (User.Identity != null && User.Identity.IsAuthenticated && User.Identity.Name == "admin")
+            {
+                <a href="/contact" class="admin-button">Các liên hệ</a>
+            }
+            else
+            {
+                <a href="/contact/contact" style="color: white; text-decoration: none; margin-left: 1.5rem;">Contact</a>
+            }
+
         </div>
         <div style="display: flex; align-items: center; gap: 1rem;">
             @if (User.Identity != null && User.Identity.IsAuthenticated)

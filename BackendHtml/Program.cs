@@ -30,6 +30,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 );
 builder.Services.Configure<MailSetting>(builder.Configuration.GetSection("MailSetting"));
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -62,4 +63,7 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
+
 app.Run();
+
+

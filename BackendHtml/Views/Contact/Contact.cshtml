@@ -1,4 +1,5 @@
 @addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@model BackendHtml.Models.Contact
 @{
     Layout = null;
 }
@@ -267,7 +268,7 @@
         <nav>
             <a href="/">Home</a>
             <a href="/home/forum">Cộng đồng</a>
-            <a href="/home/contact">Contact</a>
+            <a href="/contact/contact">Contact</a>
         </nav>
         <div class="auth-buttons">
             <button class="btn-login">ĐĂNG NHẬP</button>
@@ -349,21 +350,31 @@
                     tôi. Chúng
                     tôi luôn sẵn sàng hỗ trợ!
                 </div>
-                <form id="sendcontact">
+                <form id="sendcontact" asp-action="Contact" asp-controller="Contact" method="post">
                     <h3 class="titlecontact">LIÊN HỆ VỚI CHÚNG TÔI</h3>
-                    <label for="contact">Họ và tên:</label>
-                    <input type="text" id="contact" required />
+                    <label asp-for="Name">Họ và tên:</label>
+                    <input asp-for="Name" required />
+                    <span asp-validation-for="Name" class="validation-message"></span>
 
-                    <label for="Emailcontact">Email:</label>
-                    <input type="email" id="Emailcontact" required />
+                    <label asp-for="Email">Email:</label>
+                    <input asp-for="Email" required />
+                    <span asp-validation-for="Email" class="validation-message"></span>
 
-                    <label for="phone">Số điện thoại:</label>
-                    <input type="tel" id="phone" required />
+                    <label asp-for="Phone">Số điện thoại:</label>
+                    <input asp-for="Phone" required />
+                    <span asp-validation-for="Phone" class="validation-message"></span>
 
-                    <label for="detail">Nội dung cần hỗ trợ:</label>
-                    <textarea id="detail" rows="6" required></textarea>
+                    <label asp-for="Message">Nội dung cần hỗ trợ:</label>
+                    <textarea asp-for="Message" rows="6" required></textarea>
+                    <span asp-validation-for="Message" class="validation-message"></span>
 
                     <button type="submit">Gửi yêu cầu</button>
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div style="color: red; text-align: center;">
+                            @Html.ValidationSummary()
+                        </div>
+                    }
                 </form>
             </div>
         </div>

@@ -1,0 +1,12 @@
+# Exported from Render on 2025-06-01T09:54:50Z
+services:
+- type: web
+  name: AIBep
+  runtime: docker
+  repo: https://github.com/minhtrinhthao0409/ptudweb
+  plan: free
+  region: singapore
+  dockerContext: .
+  dockerfilePath: ./Dockerfile
+  autoDeployTrigger: commit
+version: "1"
